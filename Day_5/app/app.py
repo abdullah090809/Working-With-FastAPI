@@ -1,7 +1,6 @@
 from random import randrange
 import time
 from typing import Optional
-
 from fastapi import FastAPI, HTTPException, Response, status
 import psycopg2
 from pydantic import BaseModel, Field
