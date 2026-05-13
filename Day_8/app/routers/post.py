@@ -1,3 +1,5 @@
+from typing import Optional
+
 from fastapi import APIRouter, HTTPException, Depends, status, Response
 from sqlalchemy.orm import Session
 from app.database import get_db
@@ -9,8 +11,10 @@ from app.schemas.post import PostCreate, PostUpdate, PostResponse
 router = APIRouter(prefix="/posts", tags=["Posts"])
 
 @router.get("/", response_model=list[PostResponse])
-def get_posts(db: Session = Depends(get_db), current_user: User= Depends(Get_Current_User)):
-    return db.query(Post).all()
+def get_posts(db: Session = Depends(get_db), 
+    current_user: User= Depends(Get_Current_User), 
+    limit: int = 10, skip: int = 0, search: Optional[str] = ""):
+    return db.query(Post).filter(Post.title.contains(search)).limit(limit).offset(skip).all()
 
 @router.post("/", response_model=PostResponse)
 def create_post(post: PostCreate, db: Session = Depends(get_db), current_user: User= Depends(Get_Current_User)):

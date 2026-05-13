@@ -2,6 +2,8 @@ from datetime import datetime
 from typing import Optional
 from pydantic import BaseModel
 
+from app.schemas.user import UserResponse
+
 class PostBase(BaseModel):
     title: str
     content: str
@@ -19,5 +21,6 @@ class PostResponse(PostBase):
     id: int
     created_at: datetime
     owner_id: int
+    owner: UserResponse
     class Config:
         from_attributes = True
