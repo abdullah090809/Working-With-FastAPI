@@ -17,7 +17,7 @@ def home():
     }
 
 @app.get("/posts")
-def get_post(db: Session = Depends(get_db)):
+def get_posts(db: Session = Depends(get_db)):
     post=db.query(Post).all()
     return{
         "data": post
