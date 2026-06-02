@@ -6,11 +6,12 @@ from app.database import get_db
 from app.models.users import User
 from app.schemas.token import TokenData
 from sqlalchemy.orm import Session
+from app.config import setting
 
 oauth2_scheme=OAuth2PasswordBearer(tokenUrl="login")
-SECRET_KEY="0ad117d0b4a4664bc2d6d813145cd3394570a4f3b3feae95b7393f82913a37c3"
-ALGORITHM="HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES=60
+SECRET_KEY=setting.secret_key
+ALGORITHM=setting.algorithm
+ACCESS_TOKEN_EXPIRE_MINUTES=setting.access_token_expire_minutes
 
 def Create_Access_Token(data: dict):
     payload=data.copy()
