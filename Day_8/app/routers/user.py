@@ -1,10 +1,10 @@
 from fastapi import APIRouter, HTTPException, Depends, status, Response
 from sqlalchemy.orm import Session
+from websockets import route
 from app.database import get_db
-from app.schemas.user import UserCreate, UserResponse
-from app.models.users import User
+from app.schemas import UserCreate, UserResponse
+from app.models import User
 from app.utils import Hash
-
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
@@ -16,6 +16,10 @@ def create_user(user : UserCreate, db: Session = Depends(get_db)):
     db.commit()
     db.refresh(new_user)    
     return new_user
+
+@router.get("/",response_model=list[UserResponse])
+def get_all_user(db: Session= Depends(get_db)):
+    return db.query(User).all()
 
 @router.get("/{id}",response_model=UserResponse)
 def get_user(id: int,db: Session = Depends(get_db)):
