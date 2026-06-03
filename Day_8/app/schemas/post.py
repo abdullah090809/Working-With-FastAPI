@@ -23,3 +23,6 @@ class PostResponse(PostBase):
     owner: UserResponse
     class Config:
         from_attributes = True
+
+class PostVote(PostResponse):
+    votes: int
