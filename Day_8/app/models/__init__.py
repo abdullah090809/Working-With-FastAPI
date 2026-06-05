@@ -1,3 +1,2 @@
-from .posts import Post
-from .users import User
-from .votes import Votes
+from app.database import Base
+from app.models import posts, users, votes
